@@ -13,9 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+
+from snippets.urls import router as snippet_router_v1
+
+API_PREFIX = r'^api/v(?P<version>[0-9]+\.[0-9]+)'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'%s/' % API_PREFIX, include('drf_openapi.urls')),
+    url(r'%s/snippets/' % API_PREFIX, include(snippet_router_v1.urls, namespace='snippets')),
 ]

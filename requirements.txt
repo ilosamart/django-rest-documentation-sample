@@ -10,3 +10,6 @@ Markdown==2.6.3
 # heroku config:set HEROKU=1
 psycopg2==2.6.1
 dj-database-url==0.3.0
+# API DOC
+drf_openapi==1.0.0
+django-rest-swagger==2.1.2
