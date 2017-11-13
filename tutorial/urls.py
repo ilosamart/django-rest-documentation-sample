@@ -15,13 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework.documentation import include_docs_urls
+
+from rest_framework_swagger.views import get_swagger_view
 
 from snippets.urls import router as snippet_router_v1
 
 API_PREFIX = r'^api/v(?P<version>[0-9]+\.[0-9]+)'
+# API_PREFIX = r'^api'
+
+MY_API_TITLE = 'My API title'
+
+schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'%s/' % API_PREFIX, include('drf_openapi.urls')),
+    url(r'%s/docs/' % API_PREFIX, include_docs_urls(title=MY_API_TITLE)),
+    url(r'%s/swagger/' % API_PREFIX, include_docs_urls(title=MY_API_TITLE)),
     url(r'%s/snippets/' % API_PREFIX, include(snippet_router_v1.urls, namespace='snippets')),
 ]
